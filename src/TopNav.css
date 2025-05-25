@@ -1,0 +1,84 @@
+.topnav {
+    position: relative;
+    background: #222;
+    padding: 0.5rem 1rem;
+}
+
+.burger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    z-index: 2;
+}
+
+.burger span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.burger.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.burger.open span:nth-child(2) {
+    opacity: 0;
+}
+.burger.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.nav-links {
+    display: none;
+    flex-direction: column;
+    background: #222;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    z-index: 1;
+}
+
+.nav-links.show {
+    display: flex;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    transition: background 0.2s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    background: #444;
+    color: #ffd700;
+}
+
+/* Optional: Desktop-Ansicht */
+@media (min-width: 600px) {
+    .burger {
+        display: none;
+    }
+    .nav-links {
+        display: flex !important;
+        flex-direction: row;
+        position: static;
+        background: none;
+        width: auto;
+        padding: 0;
+    }
+    .nav-links a {
+        padding: 0.5rem 1rem;
+    }
+}
