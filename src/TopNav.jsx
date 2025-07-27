@@ -18,6 +18,7 @@ export function TopNav() {
             </button>
             <div className={`nav-links ${open ? 'show' : ''}`}>
                 <NavLink to="/" onClick={() => setOpen(false)}>Home</NavLink>
+                <NavLink to="/escape-the-lab" onClick={() => setOpen(false)}>Escape The Lab</NavLink>
                 <NavLink to="/impressum" onClick={() => setOpen(false)}>Impressum</NavLink>
                 <NavLink to="/datenschutz" onClick={() => setOpen(false)}>Datenschutzerklärung</NavLink>
             </div>
