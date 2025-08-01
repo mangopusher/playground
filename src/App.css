@@ -1,0 +1,28 @@
+.content-container {
+    position: relative;
+    z-index: 10;
+}
+
+.content-container {
+  text-align: center;
+}
+
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.particle {
+    position: absolute;
+    background-color: red;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+
