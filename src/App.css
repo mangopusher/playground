@@ -1,10 +1,12 @@
-.content-container {
-    position: relative;
-    z-index: 10;
+html, body {
+  overscroll-behavior-y: contain;
+  /* or: overscroll-behavior: none; */
 }
 
 .content-container {
-  text-align: center;
+    position: relative;
+    z-index: 10;
+    text-align: center;
 }
 
 .layer0 {

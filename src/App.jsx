@@ -52,6 +52,10 @@ function App() {
             });
         }
 
+        window.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
         screen.addEventListener('mousedown', handlePress);
         screen.addEventListener('mouseup', handleRelease);
         screen.addEventListener('touchstart', handlePress);
