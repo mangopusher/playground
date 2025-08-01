@@ -7,18 +7,28 @@ import Blogspace from './Blogspace.jsx'
 import EscapeTheLabWrapper from './EscapeTheLabWrapper.jsx'
 import Impressum from './Impressum.jsx'
 import Datenschutz from './Datenschutz.jsx'
-import { createBug } from './bugUtils/createBug.js'
+import { createBug } from './utils/createBug.js'
+import { moveBug } from './utils/moveBug.js'
+import { locateContactPoint } from './utils/locateContactPoint.js'
 
 function App() {
-    const [lastClick, setLastClick] = useState(null);
-    const [lastMouseUp, setLastMouseUp] = useState(null);
+    const [lastPress, setLastPress] = useState(null);
+    const [lastRelease, setLastRelease] = useState(null);
     const bugRef = useRef(null);
 
     useEffect(() => {
         const screen = document.getElementById('layer0');
         if (!screen) return;
 
-        function moveBugTo(xPx, yPx) {
+        function handlePress(e) {
+            const rect = screen.getBoundingClientRect();
+
+            const { xPx, yPx, xRelative, yRelative } = locateContactPoint(e, rect);
+            setLastPress({
+                x: xRelative,
+                y: yRelative,
+                triggeredEvents: e.type
+            });
             let bug = bugRef.current;
 
             // Create bug if it doesn't exist
@@ -27,52 +37,32 @@ function App() {
                 screen.appendChild(bug);
                 bugRef.current = bug;
             } else {
-                // Animate movement to new position
-                bug.style.transition = 'left 0.7s cubic-bezier(.4,2,.6,1), top 0.7s cubic-bezier(.4,2,.6,1)';
-                bug.style.left = `${xPx}px`;
-                bug.style.top = `${yPx}px`;
-            }
+                moveBug(bug, xPx, yPx);
+            }        
         }
 
-        function handleGlobalClick(e) {
-            // Get click position relative to the screen
-            
+        function handleRelease(e) {
             const rect = screen.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
-            const yPx = e.clientY - rect.top;
-            const xPercent = ((xPx / rect.width) * 100).toFixed(2) + '%';
-            const yPercent = ((yPx / rect.height) * 100).toFixed(2) + '%';
 
-            setLastClick({
-                x: xPercent,
-                y: yPercent,
-                triggeredEvents: 'ButtonEvent'
-            });
-
-            moveBugTo(xPx, yPx);
-        }
-
-        function handleGlobalMouseUp(e) {
-            const rect = screen.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
-            const yPx = e.clientY - rect.top;
-            const xPercent = ((xPx / rect.width) * 100).toFixed(2) + '%';
-            const yPercent = ((yPx / rect.height) * 100).toFixed(2) + '%';
-
-            setLastMouseUp({
-                x: xPercent,
-                y: yPercent,
-                triggeredEvents: 'ButtonEvent'
+            const { xRelative, yRelative } = locateContactPoint(e, rect);
+            setLastRelease({
+                x: xRelative,
+                y: yRelative,
+                triggeredEvents: e.type 
             });
         }
 
-        window.addEventListener('mousedown', handleGlobalClick);
-        window.addEventListener('mouseup', handleGlobalMouseUp);
+        screen.addEventListener('mousedown', handlePress);
+        screen.addEventListener('mouseup', handleRelease);
+        screen.addEventListener('touchstart', handlePress);
+        screen.addEventListener('touchend', handleRelease);
 
         // Cleanup on unmount
         return () => {
-            window.removeEventListener('mousedown', handleGlobalClick);
-            window.removeEventListener('mouseup', handleGlobalMouseUp);
+            screen.removeEventListener('mousedown', handlePress);
+            screen.removeEventListener('mouseup', handleRelease);
+            screen.removeEventListener('touchstart', handlePress);
+            screen.removeEventListener('touchend', handleRelease);
             if (bugRef.current) {
                 screen.removeChild(bugRef.current);
                 bugRef.current = null;
@@ -95,14 +85,14 @@ function App() {
                     <Route path="/datenschutz" element={<Datenschutz />} />
                 </Routes>
                 {/* Debug output for last click */}
-                {lastClick && (
+                {lastPress && (
                     <div style={{ fontSize: "0.9em", color: "#888", marginTop: "1em" }}>
-                        Last click: x={lastClick.x}, y={lastClick.y}, triggeredEvents={lastClick.triggeredEvents}
+                        Last press: x={lastPress.x}, y={lastPress.y}, triggeredEvent={lastPress.triggeredEvents}
                     </div>
                 )}
-                {lastMouseUp && (
+                {lastRelease && (
                     <div style={{ fontSize: "0.9em", color: "#888", marginTop: "0.5em" }}>
-                        Last mouseUp: x={lastMouseUp.x}, y={lastMouseUp.y}, triggeredEvents={lastMouseUp.triggeredEvents}
+                        Last release: x={lastRelease.x}, y={lastRelease.y}, triggeredEvent={lastRelease.triggeredEvents}
                     </div>
                 )}
             </div>  

@@ -7,7 +7,7 @@
   text-align: center;
 }
 
-.particles-container {
+.layer0 {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,7 +18,7 @@
     pointer-events: auto;
 }
 
-.particle {
+.bug {
     position: absolute;
     background-color: red;
     border-radius: 50%;
