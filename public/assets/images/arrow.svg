@@ -1,0 +1,47 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="120" viewBox="0 0 600 120" role="img" aria-labelledby="title desc">
+  <title id="title">Simple Realistic Arrow</title>
+  <desc id="desc">A horizontal wooden arrow with red fletching on the left and a metal arrowhead pointing to the right.</desc>
+
+  <!-- subtle gradients -->
+  <defs>
+    <linearGradient id="wood" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#b88446"></stop>
+      <stop offset="100%" stop-color="#8c5e2f"></stop>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#c9d0d6"></stop>
+      <stop offset="50%" stop-color="#9aa3ab"></stop>
+      <stop offset="100%" stop-color="#e5eaee"></stop>
+    </linearGradient>
+    <linearGradient id="feather" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#c53434"></stop>
+      <stop offset="100%" stop-color="#8e1f1f"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- shaft -->
+  <rect x="120" y="52" width="390" height="16" rx="8" fill="url(#wood)" stroke="#6b4b25" stroke-width="2"></rect>
+
+  <!-- simple nock (string notch) -->
+  <path d="M118 52 L108 60 L118 68" fill="none" stroke="#6b4b25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  <!-- fletching (three feathers) -->
+  <g>
+    <polygon points="120,30 60,30 120,55" fill="url(#feather)" stroke="#5d0f0f" stroke-width="2"></polygon>
+    <polygon points="120,55 65,60 120,65" fill="url(#feather)" stroke="#5d0f0f" stroke-width="2"></polygon>
+    <polygon points="120,90 60,90 120,65" fill="url(#feather)" stroke="#5d0f0f" stroke-width="2"></polygon>
+    <!-- feather ribs -->
+    <path d="M85 30 L110 52 M85 90 L110 68" stroke="#7f1515" stroke-width="1" opacity="0.7"></path>
+  </g>
+
+  <!-- arrowhead -->
+  <g>
+    <!-- main head -->
+    <polygon points="580,60 510,30 510,90" fill="url(#metal)" stroke="#5b646b" stroke-width="2"></polygon>
+    <!-- socket/ferule -->
+    <rect x="500" y="46" width="12" height="28" fill="#9aa3ab" stroke="#5b646b" stroke-width="2" rx="2"></rect>
+    <!-- bevel line for a bit of realism -->
+    <path d="M545 45 L580 60 L545 75" fill="none" stroke="#7e8790" stroke-width="1.5" opacity="0.8"></path>
+  </g>
+</svg>
